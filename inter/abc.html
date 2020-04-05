@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+function deepClone(target, hash = new WeakMap()){
+    if(!isObject(target)) return target;
+    if(hash.has(target)) return hash.get(target);
+
+    let res = Array.isArray(target) ? [] : {};
+        hash = hash.set(target, res);
+
+    for (const key in target) {
+        res[key] = deepClone(target[key], hash);
+    }
+    return res;
+}
+function isObject(obj){
+    return typeof obj === 'object' && obj !== null;
+}
+
+
+
+
+
+// 测试用例
+let obj = { obj: '我是obj'}
+let a = {
+    name: "muyiy",
+    book: {
+        title: "You Don't Know JS",
+        price: "45"
+    },
+    pages: [1,2,4,5],
+    a1: undefined,
+    a2: null,
+    a3: 123,
+    obj1: obj,
+    obj2: obj,
+    fn: function aa(){}
+}
+a.circleRef = a;
+
+
+
+console.log(deepCopy(a));
+
+
+
+
+</script>
+</body>
+</html>

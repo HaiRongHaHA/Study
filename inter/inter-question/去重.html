@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+    <body>
+        <img
+            src="http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg"
+            alt=""
+        /><img
+            src="http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg"
+            alt=""
+        /><img
+            src="http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg"
+            alt=""
+        /><img
+            src="http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg"
+            alt=""
+        /><img
+            src="http://a3.att.hudong.com/68/61/300000839764127060614318218_950.jpg"
+            alt=""
+        />
+        <script>
+            /*   数组去重   */
+
+            var array = [1, 1, 2, 1, 3, 4, 5, 7, 2, 4, 5, 3, 7, 8];
+            var subject = [
+                { name: '科目一1', id: 1 },
+                { name: '科目二2', id: 2 },
+                { name: '科目一3', id: 1 },
+                { name: '科目三1', id: 3 },
+                { name: '科目一2', id: 1 },
+                { name: '科目二1', id: 2 },
+                { name: '科目一4', id: 1 },
+                { name: '科目三2', id: 3 },
+                { name: '科目五1', id: 5 }
+            ];
+
+            var jsonArr = [
+                { id: 48, name: 'jony', age: 18 },
+                { id: 22, name: 'jony', age: 13 },
+                { id: 45, name: 'jony', age: 15 },
+                { id: 77, name: 'jony', age: 14 },
+                { id: 56, name: 'jony', age: 13 },
+                { id: 89, name: 'jony', age: 18 },
+                { id: 34, name: 'jony', age: 14 }
+            ];
+
+            /* es6  new set方法 */
+            // Array.prototype.unique = function(){
+            //     let newArray = new Set(this)
+            //     return Array.from(newArray)
+            // }
+            /* es6  new set方法 end*/
+
+            /* include || indexOf  新建数组判断是否包含 方法 */
+            // Array.prototype.unique = function(){
+            //     let newArray = [];
+            //     for(let i=0;i<this.length;i++){  //indexOf
+            //         if(newArray.indexOf(this[i]) == -1){
+            //             newArray.push(this[i])
+            //         }
+            //     }
+
+            //     this.forEach(item=>{    //include
+            //         if(!newArray.includes(item)){
+            //             newArray.push(item)
+            //         }
+            //     })
+            //     return newArray
+            // }
+            /* include || indexOf  新建数组判断是否包含  方法 end*/
+
+            /* 排序比对  方法 end*/
+            // Array.prototype.unique = function(){
+            //     let sortArray = this.sort();
+            //     let results = [sortArray[0]];
+            //     for(let i =0;i<sortArray.length;i++){
+            //         // *1
+            //         // if(sortArray[i] === sortArray[i+1]){
+            //         //      sortArray.splice(i,1)
+            //         //      i--
+            //         // }
+
+            //         // *2
+            //         // if(sortArray[i] !== results[results.length - 1]){
+            //         //     results.push(sortArray[i])
+            //         // }
+            //     }
+            //     return results
+            // }
+            /* 排序比对  方法 end*/
+
+            /* hash  方法 */
+            // Array.prototype.unique = function(){
+            //     let hash = {};
+            //     let results = [];
+            //     for(let i=0;i<this.length;i++)
+            //     {
+            //         !hash[this[i]] ?  hash[this[i]] = true && results.push(this[i]) : null
+            //     }
+            //     return results
+            // }
+            /* hash  方法 end*/
+
+            /*   数组去重   end */
+            /*   数组去重分类   */
+            // Array.prototype.unique = function(key){
+            //     let hash = {};
+            //     this.forEach(item=>{
+            //         let array = hash[item[key]] || []
+            //         array.push(item)
+            //         hash[item[key]] = array
+            //     })
+            //     return hash
+            // }
+            // console.log(subject.unique('id'))
+            /*   数组去重分类   end*/
+
+            // 按照age大小从大到小排序，如果age相同，则按id大小从小到大排序
+            // jsonArr.sort((cur,next)=>{
+            //     return !(cur.age - next.age) ? cur.id - next.id : cur.age - next.age
+            // })
+        </script>
+    </body>
+</html>

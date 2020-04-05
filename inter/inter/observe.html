@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo"></div>
+    <input type="text" id="inp" oninput="input()">
+</body>
+</html>
+<script>
+let obj = {
+    txt: '' 
+}
+function defineReactive(data, key, val){
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function(){
+            return val
+        },
+        set: function(newVal){
+            if(val === newVal) return
+            val = newVal
+        }
+    })
+}
+
+defineReactive(obj, 'txt', 123)
+
+let demo = document.getElementById('demo')
+let inp = document.getElementById('inp')
+
+function input(){
+    obj.txt = inp.value
+    demo.innerHTML = obj.txt
+}
+</script>

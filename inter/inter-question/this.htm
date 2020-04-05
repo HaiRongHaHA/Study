@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            // var name = 'window'
+
+            // var person1 = {
+            //     name: 'person1',
+            //     show1: function () {
+            //         console.log(this.name)
+            //     },
+            //     show2: () => console.log(this.name),
+            //     show3: function () {
+            //         return function () {
+            //             console.log(this.name)
+            //         }
+            //     },
+            //     show4: function () {
+            //         return () => console.log(this.name)
+            //     }
+            // }
+            // var person2 = { name: 'person2' }
+
+            // person1.show1()
+            // person1.show1.call(person2)
+
+            // person1.show2()
+            // person1.show2.call(person2)
+
+            // person1.show3()()
+            // person1.show3().call(person2)
+            // person1.show3.call(person2)()
+
+            // person1.show4()()
+            // person1.show4().call(person2)
+            // person1.show4.call(person2)()
+
+            // var name = 'window'
+
+            // function Person (name) {
+            //     this.name = name;
+            //     this.show1 = function () {
+            //         console.log(this.name)
+            //     }
+            //     this.show2 = () => console.log(this.name)
+            //     this.show3 = function () {
+            //         return function () {
+            //         console.log(this.name)
+            //         }
+            //     }
+            //     this.show4 = function () {
+            //         return () => console.log(this.name)
+            //     }
+            // }
+
+            // var personA = new Person('personA')
+            // var personB = new Person('personB')
+
+            // personA.show1()
+            // personA.show1.call(personB)
+
+            // personA.show2()
+            // personA.show2.call(personB)
+
+            // personA.show3()()
+            // personA.show3().call(personB)
+            // personA.show3.call(personB)()
+
+            // personA.show4()()
+            // personA.show4().call(personB)
+            // personA.show4.call(personB)()
+
+            // Function.prototype.pointTo = function(o){
+            //     var _this = this;
+            //     return function(){
+            //         return _this.apply(o, arguments);
+            //     }
+            // }
+
+            // var o = {
+            //     name: 'this=o'
+            // }
+            // o.b = (function(){
+            //     return this;
+            // }).pointTo(o);
+
+            // var o1 = {
+            //     name: 'this=o1',
+            //     b: o.b
+            // }
+
+            // var a = o1.b();
+
+            // console.log(a.name);
+
+            // let i = 1;
+            // let sum = 3;
+            // do {
+            //     sum += i++
+            //     if(sum % 7 === 0) continue
+            //     ++i;
+            // }while(sum < 15)
+            // console.log(i,'sum')
+
+            // let k=0;
+            // for(k=3; ++k<5; k++) k++;
+            // console.log(k,'fddfgfgd');
+        </script>
+    </body>
+</html>

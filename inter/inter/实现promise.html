@@ -1,0 +1,23 @@
+<script>
+    new Promise((resolve, reject) => {
+        resolve('成功');
+    })
+        .then(
+            value => {
+                setTimeout(() => {
+                    return Promise.resolve(43543);
+                }, 0);
+            },
+            reason => {
+                console.log(reason);
+            }
+        )
+        .then(
+            value => {
+                console.log('then2', value);
+            },
+            reason => {
+                console.log('thenreason2', reason);
+            }
+        );
+</script>

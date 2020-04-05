@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>节流</title>
+</head>
+<style lang="less">
+    #box{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 600px;
+        font-size: 60px;
+        color: #fff;
+        background-color: #333;
+    }
+</style>
+<body>
+    <div id="box"></div>
+</body>
+</html>
+<script>
+/* ----------- 节流 throttle  ----------- 
+    规定在一个单位时间内，只能触发一次函数。
+    如果这个单位时间内触发多次函数，只有一次生效
+*/
+
+/* 
+    防止某一时间频繁触发、间隔时间执行
+        1、鼠标不断触发，使其单位时间内只触发一次
+        2、监听窗口resize、scroll事件，比如是否滑到底部自动加载更多
+        3、上传进度
+    两种主流实现方式，使用时间戳和设置定时器
+*/
+
+/*----------- 第一种  使用时间戳 -----------*/ 
+function throttleTimer(fn, wait = 500){
+    let previous = 0;
+    return function(){
+        let now = +new Date();
+        if(now - previous > wait){
+            fn.apply(this, arguments);
+            previous = now;
+        }
+    }
+}
+
+/*----------- 第二种 设置定时器 -----------*/ 
+function throttleTimerOut(fn, wait = 500){
+    let Timer;
+    return function(){
+        if(!Timer){
+            Timer = setTimeout(() => {
+                clearTimeout(Timer);
+                Timer = null;
+                fn.call(this, arguments);
+            }, wait); 
+        }    
+    }
+}
+
+/* 
+    第一种会立刻执行，第二种会在n秒后第一次执行
+    第一种在停止触发后没办法再执行事件，第二种停止触发后依然会执行一次事件
+*/
+
+/*----------- 双剑合璧 ----------- 
+    有头有尾的节流函数
+    能立刻执行
+    停止触发后还能执行一次事件
+*/ 
+function throttle(func, wait = 500) {
+    var timeout, context, args;
+    var previous = 0;
+
+    var later = function() {
+        previous = +new Date();
+        timeout = null;
+        func.apply(context, args)
+    };
+
+    var throttled = function() {
+        var now = +new Date();
+        //下次触发 func 剩余的时间
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+         // 如果没有剩余的时间了或者你改了系统时间
+        if (remaining <= 0 || remaining > wait) {
+            console.log('remaining')
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            previous = now;
+            func.apply(context, args);
+        } else if (!timeout) {
+            console.log('timeout')
+            timeout = setTimeout(later, remaining);
+        }
+    };
+    return throttled;
+}
+
+/* 
+    可选，有头无尾、无头有尾、有头有尾都可以
+    默认不传options 有头有尾
+    leading：false 表示禁用第一次执行   有头无尾
+    trailing: false 表示禁用停止触发的回调  无头有尾
+*/
+const throttle111 = function(func, wait, options) {
+  var timeout, context, args, result;
+  
+  // 上一次执行回调的时间戳
+  var previous = 0;
+  
+  // 无传入参数时，初始化 options 为空对象
+  if (!options) options = {};
+
+  var later = function() {
+    // 当设置 { leading: false } 时
+    // 每次触发回调函数后设置 previous 为 0
+    // 不然为当前时间
+    previous = options.leading === false ? 0 : +new Date();
+    
+    // 防止内存泄漏，置为 null 便于后面根据 !timeout 设置新的 timeout
+    timeout = null;
+    
+    // 执行函数
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+
+  // 每次触发事件回调都执行这个函数
+  // 函数内判断是否执行 func
+  // func 才是我们业务层代码想要执行的函数
+  var throttled = function() {
+    
+    // 记录当前时间
+    var now = +new Date();
+    
+    // 第一次执行时（此时 previous 为 0，之后为上一次时间戳）
+    // 并且设置了 { leading: false }（表示第一次回调不执行）
+    // 此时设置 previous 为当前值，表示刚执行过，本次就不执行了
+    if (!previous && options.leading === false) previous = now;
+    
+    // 距离下次触发 func 还需要等待的时间
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    
+    // 要么是到了间隔时间了，随即触发方法（remaining <= 0）
+    // 要么是没有传入 {leading: false}，且第一次触发回调，即立即触发
+    // 此时 previous 为 0，wait - (now - previous) 也满足 <= 0
+    // 之后便会把 previous 值迅速置为 now
+    // console.log(remaining, wait, remaining <= 0, remaining > wait)
+    if (remaining <= 0 || remaining > wait) {
+        console.log(1)
+      if (timeout) {
+        clearTimeout(timeout);
+        
+        // clearTimeout(timeout) 并不会把 timeout 设为 null
+        // 手动设置，便于后续判断
+        timeout = null;
+      }
+      
+      // 设置 previous 为当前时间
+      previous = now;
+      
+      // 执行 func 函数
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+        console.log(2)
+      // 最后一次需要触发的情况
+      // 如果已经存在一个定时器，则不会进入该 if 分支
+      // 如果 {trailing: false}，即最后一次不需要触发了，也不会进入这个分支
+      // 间隔 remaining milliseconds 后触发 later 方法
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+
+  // 手动取消
+  throttled.cancel = function() {
+    clearTimeout(timeout);
+    previous = 0;
+    timeout = context = args = null;
+  };
+
+  // 执行 _.throttle 返回 throttled 函数
+  return throttled;
+};
+
+
+
+
+/* ----------- 测试用例 ----------- */
+var count = 1;
+var box = document.getElementById('box');
+
+function getUserAction() {
+    box.innerHTML = count++;
+};
+
+box.onmousemove = throttle111(getUserAction, 800);
+// 默认不传options 有头有尾
+// leading: false 表示禁用第一次执行   无头有尾 
+// trailing:  false 表示禁用停止触发的回调  有头无尾
+</script>
+
+
+<script>
+
+
+    
+/* 
+    可选，有头无尾、无头有尾、有头有尾都可以
+    默认不传options 有头有尾
+    leading：false 表示禁用第一次执行   无头有尾
+    trailing: false 表示禁用停止触发的回调  有头无尾
+*/
+const throttle111 = function(func, wait, options) {
+  var timeout, context, args, result;
+  var previous = 0;
+  if (!options) options = {};
+  var later = function() {
+    previous = options.leading === false ? 0 : +new Date();
+    timeout = null;
+    result = func.apply(context, args);
+  };
+  var throttled = function() {
+    var now = +new Date();
+    if (!previous && options.leading === false) previous = now;
+    var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+  throttled.cancel = function() {
+    clearTimeout(timeout);
+    previous = 0;
+    timeout = context = args = null;
+  };
+  return throttled;
+};
+</script>
