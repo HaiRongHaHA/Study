@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <style>
+        /* body {
+            background-color: red;
+        } */
+    </style>
+    <body>
+        <div class="wrap">
+            <span>哈哈哈</span>
+            <!-- <img src="./dog.jpg" alt="" /> -->
+        </div>
+        <!-- 用这个模板 插入脚本，把这个html再生成到打包目录下 -->
+        <!-- 
+            不能在这里引入css，找个文件是个模板打包时会原封不动，
+            打包不会把css打包到打包文件里，所有我们要把css变成一个
+            模板来进行引入
+            require("./index.css"); 这样引入会报错，webpack不认识需要loader
+            
+        -->
+    </body>
+</html>

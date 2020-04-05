@@ -1,0 +1,12 @@
+/* 
+    @import "./a.less"; 
+    css文件中引入less文件会按照css语法解析
+*/
+
+body {
+    background-color: pink;
+    /* transform: rotate(45deg); */
+}
+div {
+    color: aqua;
+}

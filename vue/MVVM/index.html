@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="school.name" />
+            <div>{{school.name}}---{{text1}}</div>
+            <div>{{school.age}}</div>
+            <div>{{text1}}</div>
+            <!-- 如果数据不变化视图就不会刷新 -->
+            {{getNewName}}
+            <!-- 我们在内部会匹配 {{}} -->
+            <button v-on:click="change">点击呀点呀</button>
+            <ul>
+                <li>1</li>
+                <li>1</li>
+            </ul>
+        </div>
+    </body>
+    <script src="./mvvm.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                text1: "我是单独得string",
+                school: {
+                    name: "海容",
+                    age: 10
+                }
+            },
+            computed: {
+                getNewName() {
+                    return this.school.name + "哈哈";
+                }
+            },
+            methods: {
+                change() {
+                    this.school.age += 1;
+                }
+            }
+        });
+    </script>
+</html>
