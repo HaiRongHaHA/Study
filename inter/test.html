@@ -6,45 +6,7 @@
         <title>Document</title>
     </head>
     <body></body>
-    <script>
-        console.log("______________扁平化_____________");
-        var arr = [[1, 2, 2], 3, 4, [5, [7, 6, 9], 6, 7]];
-        var arr1 = [[1, 2, 2], 3, 4, [5, [7, 6, 9], 6, 7]];
-        console.log(
-            arr
-                .toString()
-                .split(",")
-                .map(item => Number(item)),
-            "toString"
-        );
-        while (arr.some(item => Array.isArray(item))) {
-            arr = [].concat(...arr);
-        }
-        console.log(arr, "while");
-        console.log(
-            JSON.stringify(arr)
-                .replace(/(\[|\])/g, "")
-                .split(",")
-                .map(item => Number(item)),
-            "JSON.stringify"
-        );
-        function Flat() {
-            let res = [];
-            let fn = arr => {
-                for (const item of arr) {
-                    if (Array.isArray(item)) {
-                        fn(item);
-                        continue;
-                    }
-                    res.push(item);
-                }
-            };
-            fn(arr1);
-            return res;
-        }
-        console.log(Flat(), "fn");
-    </script>
-    <script>
-        console.log("______________扁平化_____________");
-    </script>
+    <script src="./reduce&map&each.js"></script>
+    <script src="./call&apply&bind.js"></script>
+    <script src="./deepClone.js"></script>
 </html>
