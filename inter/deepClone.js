@@ -1,37 +1,37 @@
 // Object.assign 原理及其实现
-// if(typeof Object.assignCopy != 'function'){
-//     Object.defineProperty(Object, 'assignCopy', {
-//         value: function(target){
-//             'use strict';
-//             if(target == null){
-//                 throw new TypeError('不能拼接null||undefined对象')
-//             }
-//             let returnObj = Object(target)
-//             for (var i = 1; i < arguments.length; i++){
-//                 var next = arguments[i]
-//                 if(next != null){
-//                     for (var key in next){
-//                         if(Object.prototype.hasOwnProperty.call(next, key)){
-//                             returnObj[key] = next[key]
-//                         }
-//                     }
-//                 }
-//             }
-//             return returnObj
-//         },
-//         writable: true,
-//         configurable: true
-//     })
-// }
+if (typeof Object.assignCopy != "function") {
+    Object.defineProperty(Object, "assignCopy", {
+        value: function (target) {
+            "use strict";
+            if (target == null) {
+                throw new TypeError("不能拼接null||undefined对象");
+            }
+            let returnObj = Object(target);
+            for (var i = 1; i < arguments.length; i++) {
+                var next = arguments[i];
+                if (next != null) {
+                    for (var key in next) {
+                        if (Object.prototype.hasOwnProperty.call(next, key)) {
+                            returnObj[key] = next[key];
+                        }
+                    }
+                }
+            }
+            return returnObj;
+        },
+        writable: true,
+        configurable: true,
+    });
+}
 
-// let originObj = {
-//     a: 222,
-//     c: 'ccc'
-// }
-// let testObj = Object.create(null)
-//     testObj.b= 'bbb'
+let originObj = {
+    a: 222,
+    c: "ccc",
+};
+let testObj = Object.create(null);
+testObj.b = "bbb";
 
-// console.log(Object.assignCopy(originObj, testObj))
+console.log(Object.assignCopy(originObj, testObj));
 
 /*  -------------  深拷贝 ------------- */
 

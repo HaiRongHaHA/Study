@@ -1,0 +1,92 @@
+<!-- <script src="./promise.js"></script> -->
+<!-- <script src="./promiseClass.js"></script> -->
+<script>
+    /*
+        let p = new Promise((resolve, reject)=>{
+            setTimeout(() => {
+                resolve('3243')
+                console.log('执行玩了')
+            });
+        }).then(res=>{
+            console.log(res,'res')
+            return Promise.reject(3)
+        }).catch(err=>{
+            console.log(err,'err')
+        }).then(res=>{
+            console.log(res,'22')
+        }).catch(err=>{
+            console.log(err,'err222')
+        })
+
+        const p1 = new Promise((resolve, reject)=>{
+            setTimeout(() => {
+                resolve(7)
+            }, 100)
+        })
+        const p2 = Promise.resolve(2)
+        const p3 = Promise.resolve(3)
+        const pAll = Promise.all([p1,p2,8,p3])
+        pAll.then(res=>{
+            console.log(res,'pAll then')
+        }).catch(err=>{
+            console.log(err,'pAll catch')
+        })
+    */
+
+    /*
+        // 3 7 4 1 2 5
+        const first = ()=>(new Promise((resolve, reject)=>{
+            console.log(3)
+            let p = new Promise((resolve, reject)=>{
+                console.log(7)
+                setTimeout(()=>{
+                    console.log(5)
+                    resolve(6)
+                })
+                resolve(1)
+            })
+            resolve(2)
+            p.then((arg)=>{
+                console.log(arg);
+            })
+        }))
+
+        first().then((arg)=>{
+            console.log(arg);
+        })
+        console.log(4)
+    */
+
+    /*
+
+        // 1, 7, 2, 3, 8, 4, 6, 5, 0
+
+        setTimeout(() => {
+            console.log('0');
+        }, 0);
+        new Promise ((resolve, reject)=>{
+            console.log('1');
+            resolve()
+        }).then(()=>{
+            console.log('2');
+            new Promise ((resolve, reject)=>{
+                console.log('3');
+                resolve()
+            }).then(()=>{
+                console.log('4');
+            }).then(()=>{   // 4不执行5就不能放进队列,内部缓存5的回调函数,但then执行了
+                console.log('5');
+            })
+        }).then(()=>{
+            console.log('6');
+        })
+
+        new Promise ((resolve, reject)=>{
+            console.log('7');
+            resolve()
+        }).then(()=>{
+            console.log('8');
+        })
+
+    */
+</script>

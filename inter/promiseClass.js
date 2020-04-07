@@ -1,26 +1,16 @@
-/*
-    自定义Promise函数模块: IIFE
-*/
-
-(function (window) {
-    /*
-        Promise构造函数
-        excutor: 执行器函数(同步执行)
-    */
-
-    function Promise(excutor) {
+class Promise {
+    constructor(excutor) {
         this.status = "pending"; // 给promise对象指定status属性,初始值为pending
         this.data = undefined; // 给promise对象指定一个用于存储结果数据的属性
         this.callbacks = []; // 每个元素的结构: {onResolved(){}, onRejected(){} }
 
         this.resolve = (value) => {
-            changStatus(this, "resolved", value, "onResolved");
+            handleStatus.call(this, "resolved", value, "onResolved");
         };
 
         this.reject = (reason) => {
-            changStatus(this, "rejectd", reason, "onRejected");
+            handleStatus.call(this, "rejectd", reason, "onRejected");
         };
-
         try {
             excutor(this.resolve, this.reject);
         } catch (error) {
@@ -29,33 +19,7 @@
         }
     }
 
-    /*
-        改状态,执行回调
-    */
-
-    function changStatus(_this, status, data, callbackName) {
-        if (_this.status !== "pending") {
-            // 一个promise对象只能成功或失败一次
-            return;
-        }
-        _this.status = status;
-        _this.data = data;
-        if (_this.callbacks.length > 0) {
-            // 如果有待执行callback函数, 立即异步执行回调函数
-            setTimeout(() => {
-                // 放入队列中执行所有成功或失败回调
-                _this.callbacks.map((callbacksObj) => {
-                    callbacksObj[callbackName](data);
-                });
-            });
-        }
-    }
-
-    /*
-        指定成功和失败的回调函数
-        返回一个新的promise对象
-    */
-    Promise.prototype.then = function (onResolved, onRejected) {
+    then(onResolved, onRejected) {
         // 回调默认值必须是函数
         onResolved =
             typeof onResolved === "function" ? onResolved : (value) => value;
@@ -106,18 +70,13 @@
                 });
             }
         });
-    };
-    /*
-        指定失败的回调函数
-        返回一个新的promise对象
-    */
-    Promise.prototype.catch = function (onRejected) {
+    }
+
+    catch(onRejected) {
         return this.then(undefined, onRejected);
-    };
-    /*
-        返回一个指定结果成功的promise
-    */
-    Promise.resolve = function (value) {
+    }
+
+    static resolve(value) {
         return new Promise((resolve, reject) => {
             if (value instanceof Promise) {
                 value.then(resolve, reject);
@@ -125,19 +84,15 @@
                 resolve(value);
             }
         });
-    };
-    /*
-        返回一个reason的失败的promise
-    */
-    Promise.reject = function (reason) {
+    }
+
+    static reject(reason) {
         return new Promise((resolve, reject) => {
             reject(reason);
         });
-    };
-    /*
-        返回一个promise, 只有当所有promise都成功时才成功, 否则失败
-    */
-    Promise.all = function (promises) {
+    }
+
+    static all(promises) {
         const values = new Array(promises.length);
         let resolvedCount = 0;
         return new Promise((resolve, reject) => {
@@ -156,11 +111,9 @@
                 );
             });
         });
-    };
-    /*
-        返回一个promise, 其结果由第一个完成或失败的promise决定
-    */
-    Promise.race = function (promises) {
+    }
+
+    static race(promises) {
         return new Promise((resolve, reject) => {
             promises.map((item) => {
                 Promise.resolve(item).then(
@@ -173,7 +126,25 @@
                 );
             });
         });
-    };
+    }
+}
 
-    window.Promise = Promise;
-})(window);
+function handleStatus(status, data, callbackName) {
+    if (this.status !== "pending") {
+        // 一个promise对象只能成功或失败一次
+        return;
+    }
+    this.status = status;
+    this.data = data;
+    if (this.callbacks.length > 0) {
+        // 如果有待执行callback函数, 立即异步执行回调函数
+        setTimeout(() => {
+            // 放入队列中执行所有成功或失败回调
+            this.callbacks.map((callbacksObj) => {
+                callbacksObj[callbackName](data);
+            });
+        });
+    }
+}
+
+window.Promise = Promise;
