@@ -1,30 +1,40 @@
 // 正则获取url params
-function getUrlParams(url) {
-    console.log("————————————————— 正则获取url params —————————————————");
-    url =
-        "https://mbd.baidu.com/newspage/data/landingsuper?n_type=034&p_from=110";
-    let reg = /([^?&#=]+)=([^?&#=]+)/g;
+console.log("————————————————— 正则获取url params —————————————————");
+function getUrlParams() {
+    url = window.location.href;
+    let reg = /#([^?&#=]+)|([^?&#=]+)=([^?&#=]+)/g;
     let obj = {};
     url.replace(reg, (...item) => {
-        obj[item[1]] = item[2];
+        let [, $1, $2, $3] = item;
+        if ($1) {
+            obj["hash"] = $1;
+            return;
+        }
+        obj[$2] = $3;
     });
     console.log(obj);
 }
 getUrlParams();
 // 正则切分价格千分符
+console.log("————————————————— 正则切分价格千分符 —————————————————");
 function formatPrice(price) {
-    console.log("————————————————— 正则切分价格千分符 —————————————————");
-    price = typeof price === "number" ? price.toLocaleString() : price;
-    // let reg = /(\d{3})(?=\d)/g;
-    let reg = /\d{1,3}(?=(\d{3})+$)()/g;
-    // price.replace(reg, (...item) => {
-    //     console.log(item);
-    // });
+    price = typeof price === "number" ? price.toString() : price;
+    let reg = /\d{1,3}(?=(\d{3})+(\.|$))/g;
     console.log(price.replace(reg, "$&,"));
 }
-formatPrice(12345678901);
+formatPrice(12634567.97);
+formatPrice(8415);
 // 正则切分银行卡卡号
+function formatbankCard(card) {
+    let reg = /(\d{4})(?=\d)/g;
+    card.replace(reg, (...item) => {
+        console.log(item);
+    });
+    console.log(card.replace(reg, "$& "));
+}
+formatbankCard("1234567891234567652");
 // 实现xss-filter
+
 //  渲染一个超长list,实现dom节点复用
 
 // 一次可以走一步或者两步，n个阶梯的楼梯有多少种走法
