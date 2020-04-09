@@ -66,17 +66,3 @@ resetData(arrayData, "type", "score");
     Chinesescore: 40,
     Englishscore: 60
 }  */
-
-// function filter(xss) {
-//     var whiteList = ["h1", "h2"]; // 白名单
-//     var translateMap = { "<": "&lt;", ">": "&gt;" };
-//     return xss.replace(/<\/?(.*?)>/g, function (str, $1, index, origin) {
-//         console.log($1);
-//         if (whiteList.indexOf($1) >= 0) {
-//             return str;
-//         }
-//         return str.replace(/[<>]/g, function (str) {
-//             return translateMap[str];
-//         });
-//     });
-// }

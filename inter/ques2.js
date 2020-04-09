@@ -34,13 +34,18 @@ function formatbankCard(card) {
 }
 formatbankCard("1234567891234567652");
 // 实现xss-filter
-
-//  渲染一个超长list,实现dom节点复用
-
-// 一次可以走一步或者两步，n个阶梯的楼梯有多少种走法
-// 求一个数组中比左边和右边的元素都大的元素
-// 实现扫雷(二维数组,随机分布地雷坐标)
-// random7实现random10
+console.log("————————————————— 实现xss-filter —————————————————");
+function xssFilter(str) {
+    let translateMap = { "<": "&lt;", ">": "&gt;" };
+    let result = str.replace(/<\/?(.*?)>/g, ($1) => {
+        return $1.replace(/[<>]/g, (str) => translateMap[str]);
+    });
+    console.log(result);
+    return result;
+}
+xssFilter(
+    "我是哈哈哈，呀呀，<IMG SRC=javascript:alert('XSS')/><script src='http://3w.org/xss.js'></script>"
+);
 
 // http常用返回码及含义
 // http缓存控制，协商缓存相关的几个头部之间的优先级关系？
@@ -49,5 +54,11 @@ formatbankCard("1234567891234567652");
 // cookie有什么用?存在什么问题?如何解决?crsf如何防范?
 // dns寻址过程?简述cdn原理
 
-// 如何定位内存泄漏
 // 前端适配方案
+
+//  渲染一个超长list,实现dom节点复用
+
+// 一次可以走一步或者两步，n个阶梯的楼梯有多少种走法
+// 求一个数组中比左边和右边的元素都大的元素
+// 实现扫雷(二维数组,随机分布地雷坐标)
+// random7实现random10
